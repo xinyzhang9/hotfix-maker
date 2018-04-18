@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Hotfix Helper</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
@@ -12,34 +13,17 @@
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>. -->
 
-    <form action="upload" method="POST">
+    <form method="POST">
       <input type="file" multiple id="filearea">
       <p id="filemsg">Drag your files here or click in this area.</p>
-      <button type="submit">Upload</button>
     </form>
-    <script>
-      document.addEventListener('drop', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        document.querySelector('form p').textContent = e.dataTransfer.files.length + " file(s) selected";
-        for (let f of e.dataTransfer.files) {
-          console.log('File(s) you dragged here: ', f.path);
-        }
-      });
-      document.addEventListener('dragover', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      });
-      document.getElementById('filearea').addEventListener("change", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log(e);
-        document.querySelector('form p').textContent = e.target.files.length + " file(s) selected";
-        for (let f of e.target.files) {
-          console.log('File(s) you dragged here: ', f.path)
-        }
-      })
-    </script>
+    <br />
+    <h4>Results</h4>
+    <button id="upload">test</button>
+    <ul id="results">
+
+    </ul>
+
     <script>
       // You can also require other files to run in this process
       require('./renderer.js');
