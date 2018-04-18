@@ -15,5 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^1.8.4"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1"
   }
 }
