@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Hotfix Helper</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="https://use.fontawesome.com/b8e7fe9976.js"></script>
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
@@ -18,15 +18,18 @@
         <p id="filemsg">Drag your files here or click in this area.</p>
 
       </form>
-      <button id="mainBtn" type="button">START</button>
-      <div>
-        <p id="errorMsg"></p>
-      </div>
+      
     </section>
     <section id="section2">
-      <p id="saveTo"></p>
+      <p id="saveToTitle">Select the directory you want to save to</p>
+        <input style="width: 485px;" type="text" id='slected-file'></input>
+
+        <i class="fa fa-cog" aria-hidden="true" id='select-file'></i>
+
+        <!-- <button id='select-file'>select</button> -->
     </section>
     <section id="section3">
+        <button id="mainBtn" type="button">START</button>
         <ul id="results">
     
         </ul>

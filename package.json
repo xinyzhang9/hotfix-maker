@@ -17,6 +17,7 @@
     "electron": "^1.8.4"
   },
   "dependencies": {
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "sweetalert": "^2.1.0"
   }
 }

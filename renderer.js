@@ -3,10 +3,11 @@
 // All of the Node.js APIs are available in this process.
 const fs = require('fs');
 const os = require('os');
+const swal = require('sweetalert');
 const mkdirp = require('mkdirp');
-const homeDir = os.homedir() + '/Desktop/';
+let homeDir = os.homedir() + '/Desktop/';
 
-document.getElementById('saveTo').textContent = "Hotfix will be saved to " + homeDir;
+// document.getElementById('saveTo').textContent = "Hotfix will be saved to " + homeDir;
 
 String.prototype.replaceAll = function(search, replacement) {
   var target = this;
@@ -82,6 +83,8 @@ function main() {
     // console.log('classpath',classPath);
     generateDir(homeDir, classPath, filePath, fileName);
   }
+
+  swal("","Hotfix is generated successfully","success");
 }
 
 document.addEventListener('drop', function (e) {
@@ -91,15 +94,28 @@ document.addEventListener('drop', function (e) {
     const fileli = document.createElement('li');
     fileli.textContent = f.path;
     if(!validateFile(f.path)) {
-      document.getElementById('errorMsg').textContent = "Please only select .class files";
-      setTimeout(function(){
-        document.getElementById('errorMsg').textContent = "";
-      }, 1000)
+      swal("","Please only select .class files","error");
       return;
     }
+    // @set: deleteButton dom
+    // var deleteButton = document.createElement("button");
+    // deleteButton.innerHTML = "deletet";
+    // deleteButton.className = "deleteDom";
+
+    // fileli.appendChild(deleteButton);
+
+    // //@get current li
+    // var currentLi = deleteButton.parentNode;
+    // //@trigger: click
+    // deleteButton.addEventListener("click", function() {
+    // deleteDom(currentLi);
+    // }); 
+
+
     document.getElementById('results').appendChild(fileli);
-    document.querySelector('form p').textContent = e.dataTransfer.files.length + " file(s) selected";
+    
   }
+  document.querySelector('form p').textContent = document.getElementById('results').children.length + " file(s) selected";
 });
 
 document.addEventListener('dragover', function (e) {
@@ -119,3 +135,28 @@ document.querySelector('form').addEventListener("change", function(e) {
 
 const mainBtn = document.getElementById("mainBtn");
 mainBtn.addEventListener('click', main);
+
+// select home dir
+const ipc = require('electron').ipcRenderer
+const selectDirBtn = document.getElementById('select-file')
+
+selectDirBtn.addEventListener('click', function (event) {
+     ipc.send('open-file-dialog','ping')
+});
+
+//Getting back the information after selecting the file
+ipc.on('selected-file', function (event, path) {
+  //do what you want with the path/file selected, for example:
+  console.log(path[0])
+  const newPath = path[0].replace(/\\/g,'/')
+  homeDir = newPath
+  // document.getElementById('slected-file').innerHTML = `You selected: ${path[0]}`
+  document.getElementById('slected-file').value = path[0]
+
+}); 
+
+// delete
+function deleteDom(currentLi) {
+  document.getElementById('results').removeChild(currentLi);
+  }; 
+
