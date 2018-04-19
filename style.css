@@ -98,3 +98,9 @@ form button:active{
   color:#0079EF;
   height: 30px;
 }
+
+.deleteButton {
+  color:red;
+  height: 30px;
+  padding-left: 20px;
+  } 

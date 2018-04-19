@@ -75,6 +75,10 @@ function getClassPath(path) {
 
 function main() {
   lis = document.querySelectorAll("li");
+  if(lis.length < 1) {
+    swal("","You need to select files before proceeding.","error");
+    return;
+  }
   for(let li of lis) {
     const path = li.textContent;
     const filePath = transformPath(path);
@@ -93,26 +97,36 @@ document.addEventListener('drop', function (e) {
   for (let f of e.dataTransfer.files) {
     const fileli = document.createElement('li');
     fileli.textContent = f.path;
+
     if(!validateFile(f.path)) {
       swal("","Please only select .class files","error");
       return;
     }
+
+    var t = document.getElementsByTagName('li')
+    // for(let existFilePath of t.path)
+    for (var i = 0;i<t.length; i ++) {
+      console.log(f.path + ':'+t[i].textContent)
+      if(f.path === t[i].textContent){
+        swal("",'file '+ f.path+ ' has existed!',"info")
+        f.existflag = true
+        break
+      }
+    } 
+    if(!f.existflag) {
+      var deleteButton = document.createElement("i");
+    deleteButton.className = "fa fa-close deleteButton";
+    //deleteButton.setAttribute("aria-hidden", "true");
+    fileli.appendChild(deleteButton);
+    //@get current li
+    asyncGetLi(deleteButton).then(function(value) {
+    }, function(err) {
+    console.log(err);
+    });
     // @set: deleteButton dom
-    // var deleteButton = document.createElement("button");
-    // deleteButton.innerHTML = "deletet";
-    // deleteButton.className = "deleteDom";
-
-    // fileli.appendChild(deleteButton);
-
-    // //@get current li
-    // var currentLi = deleteButton.parentNode;
-    // //@trigger: click
-    // deleteButton.addEventListener("click", function() {
-    // deleteDom(currentLi);
-    // }); 
-
-
+ 
     document.getElementById('results').appendChild(fileli);
+    }
     
   }
   document.querySelector('form p').textContent = document.getElementById('results').children.length + " file(s) selected";
@@ -126,11 +140,17 @@ document.addEventListener('dragover', function (e) {
 document.querySelector('form').addEventListener("change", function(e) {
   e.preventDefault();
   e.stopPropagation();
-  console.log(e);
   document.querySelector('form p').textContent = e.target.files.length + " file(s) selected";
   for (let f of e.target.files) {
-    console.log('File(s) you dragged here: ', f.path);
+    const fileli = document.createElement('li');
+    fileli.textContent = f.path;
+    if(!validateFile(f.path)) {
+      swal("","Please only select .class files","error");
+      return;
+    }
+    document.getElementById('results').appendChild(fileli);
   }
+  document.querySelector('form p').textContent = document.getElementById('results').children.length + " file(s) selected";
 })
 
 const mainBtn = document.getElementById("mainBtn");
@@ -160,3 +180,23 @@ function deleteDom(currentLi) {
   document.getElementById('results').removeChild(currentLi);
   }; 
 
+  function asyncGetLi( deleteButton) {
+    return new Promise(function(resolve, reject) {
+    var currentLi = deleteButton.parentNode;
+    deleteButton.addEventListener("click", function() {
+    deleteDom( currentLi );
+    }); 
+    resolve(currentLi);
+    });
+    } 
+
+    function asyncGetLi( deleteButton) {
+      return new Promise(function(resolve, reject) {
+      var currentLi = deleteButton.parentNode;
+      deleteButton.addEventListener("click", function() {
+        deleteDom( currentLi );
+        document.querySelector('form p').textContent = document.getElementById('results').children.length + " file(s) selected";
+      }); 
+      resolve(currentLi);
+      });
+      } 

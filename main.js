@@ -61,7 +61,6 @@ app.on('activate', function () {
 const ipc = require('electron').ipcMain
 const dialog = require('electron').dialog
 ipc.on('open-file-dialog', function (event) {
-  console.log('1111')
   dialog.showOpenDialog({
     properties: ['openFile','openDirectory']
   }, function (files) {

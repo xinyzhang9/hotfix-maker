@@ -1,11 +1,13 @@
 {
   "name": "hotfix-maker",
+  "productName": "Hotfix Maker",
   "version": "1.0.0",
   "description": "A cross-platform desktop app that makes hotfix easier",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "package": "build"
   },
   "keywords": [
     "electron",
@@ -14,10 +16,15 @@
   "author": "xinyang.zhang@hpe.com",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^1.8.4"
+    "electron": "^1.8.4",
+    "electron-builder": "^20.9.0"
   },
   "dependencies": {
     "mkdirp": "^0.5.1",
     "sweetalert": "^2.1.0"
+  },
+  "build": {
+    "appId": "com.microfocus.HotfixMaker",
+    "files": "!asset${/*}"
   }
 }
