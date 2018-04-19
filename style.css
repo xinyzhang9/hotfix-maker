@@ -53,3 +53,7 @@ form button:active{
   text-align: center;
   color:#0079EF; 
 }
+#errorMsg {
+  text-align: center;
+  color: red;
+}

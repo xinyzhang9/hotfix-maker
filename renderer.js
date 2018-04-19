@@ -11,17 +11,9 @@ String.prototype.replaceAll = function(search, replacement) {
   return target.split(search).join(replacement);
 };
 
-function addPath(path) {
-  waitingList.push(path);
+function validateFile(path) {
+  return path.endsWith('.class');
 }
-
-function deletePath(path) {
-  if(waitingList.length < 1) return;
-  if(waitingList.indexOf(path) < 0) return;
-  let index = waitingList.indexOf(path);
-  waitingList.splice(index, 1);
-}
-
 function transformPath(path) {
   if(path === null || path.length < 1) return;
   let delimiter = '';
@@ -31,8 +23,6 @@ function transformPath(path) {
   const newPath = path.replaceAll(delimiter,'/');
   console.log(newPath);
   return newPath;
-  // const splitedPath = path.split(delimiter);
-  // console.log(splitedPath);
 }
 
 function getFileName(path) {
@@ -73,29 +63,41 @@ function generateDir(homeDir, classDir, filePath, fileName) {
   });
 }
 
-function test() {
+function getClassPath(path) {
+  if(path === null || path.length < 1) return;
+  const index = path.indexOf('/classes/com');
+  const lastIndex = path.lastIndexOf("/");
+  return path.slice(index, lastIndex);
+}
+
+function main() {
   lis = document.querySelectorAll("li");
   for(let li of lis) {
     const path = li.textContent;
     const filePath = transformPath(path);
     const fileName = getFileName(path);
-    generateDir(homeDir, '/classes/com/hp', filePath, fileName);
+    const classPath = getClassPath(filePath);
+    // console.log('classpath',classPath);
+    generateDir(homeDir, classPath, filePath, fileName);
   }
   
 }
 
-const testButton = document.getElementById("upload");
-testButton.addEventListener('click', test);
-
 document.addEventListener('drop', function (e) {
   e.preventDefault();
   e.stopPropagation();
-  document.querySelector('form p').textContent = e.dataTransfer.files.length + " file(s) selected";
   for (let f of e.dataTransfer.files) {
     const fileli = document.createElement('li');
     fileli.textContent = f.path;
+    if(!validateFile(f.path)) {
+      document.getElementById('errorMsg').textContent = "Please only select .class files";
+      setTimeout(function(){
+        document.getElementById('errorMsg').textContent = "";
+      }, 1000)
+      return;
+    }
     document.getElementById('results').appendChild(fileli);
-    // console.log('File(s) you dragged here: ', f.path);
+    document.querySelector('form p').textContent = e.dataTransfer.files.length + " file(s) selected";
   }
 });
 
@@ -110,6 +112,9 @@ document.querySelector('form').addEventListener("change", function(e) {
   console.log(e);
   document.querySelector('form p').textContent = e.target.files.length + " file(s) selected";
   for (let f of e.target.files) {
-    console.log('File(s) you dragged here: ', f.path)
+    console.log('File(s) you dragged here: ', f.path);
   }
 })
+
+const mainBtn = document.getElementById("mainBtn");
+mainBtn.addEventListener('click', main);
