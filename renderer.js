@@ -4,7 +4,9 @@
 const fs = require('fs');
 const os = require('os');
 const mkdirp = require('mkdirp');
-const homeDir = 'C:/Users/zhaxinya/Desktop/';
+const homeDir = os.homedir() + '/Desktop/';
+
+document.getElementById('saveTo').textContent = "Hotfix will be saved to " + homeDir;
 
 String.prototype.replaceAll = function(search, replacement) {
   var target = this;
@@ -80,7 +82,6 @@ function main() {
     // console.log('classpath',classPath);
     generateDir(homeDir, classPath, filePath, fileName);
   }
-  
 }
 
 document.addEventListener('drop', function (e) {

@@ -12,21 +12,25 @@
     <!-- We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>. -->
+    <section id="section1">
+      <form method="POST">
+        <input type="file" multiple id="filearea">
+        <p id="filemsg">Drag your files here or click in this area.</p>
 
-    <form method="POST">
-      <input type="file" multiple id="filearea">
-      <p id="filemsg">Drag your files here or click in this area.</p>
-    </form>
-    <div>
-      <p id="errorMsg"></p>
-    </div>
-    <br />
-    <h4>Results</h4>
-    <button id="mainBtn">test</button>
-    <ul id="results">
-
-    </ul>
-
+      </form>
+      <button id="mainBtn" type="button">START</button>
+      <div>
+        <p id="errorMsg"></p>
+      </div>
+    </section>
+    <section id="section2">
+      <p id="saveTo"></p>
+    </section>
+    <section id="section3">
+        <ul id="results">
+    
+        </ul>
+    </section>
     <script>
       // You can also require other files to run in this process
       require('./renderer.js');
