@@ -1,6 +1,6 @@
 # hotfix maker
 
-This app helps developers to generate hotfix easily. 
+This app helps developers to generate hotfix easily by providing a user friendly GUI and do file path manipulation for you.
 ![screenshot](hotfix.PNG)
 ## How to use
 1. Navigate to the .class files in the File Explorer and Drag the .class files to the box inside the app.
