@@ -50,6 +50,7 @@ function generateDir(homeDir, classDir, filePath, fileName) {
     classDir = classDir.slice(1);
   }
   let targetDir = homeDir + classDir;
+  targetDir = targetDir.replace('classes','classes/hotfix');
   console.log(targetDir);
   mkdirp(targetDir, function(err) {
     if (err) {
