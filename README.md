@@ -1,7 +1,7 @@
 # hotfix maker
 
 This app helps developers to generate hotfix easily. 
-
+![screenshot](hotfix.PNG)
 ## How to use
 1. Navigate to the .class files in the File Explorer and Drag the .class files to the box inside the app.
 2. Choose where to save your hotfix. The default location is Desktop
